@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Folder Organizer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace">
+        <div class="page-title">Folder Organizer</div>
+        <div class="subtitle">A click away to organize your folder</div>
+
+        <section class="panel settings-panel" id="settingsPanel" aria-label="Settings" style="visibility: hidden;">
+          <h2 class="panel-title settings-title">Settings</h2>
+
+          <div class="panel-body">
+            <label class="field">
+              <span>Organization mode</span>
+              <select id="organizationMode">
+                <option value="type">By file type</option>
+                <option value="date">By date</option>
+                <option value="custom">By custom rules</option>
+              </select>
+            </label>
+
+            <label class="checkbox-row">
+              <input id="renameEnabled" type="checkbox" checked />
+              <span>Rename files</span>
+            </label>
+
+            <div class="field rename-only">
+              <span>Rename pattern</span>
+              <input id="renamePattern" type="text" value="{category}_{index:03d}{ext}" />
+            </div>
+
+            <label class="checkbox-row">
+              <input id="recursiveScan" type="checkbox" checked />
+              <span>Recursive scan</span>
+            </label>
+
+            <label class="checkbox-row">
+              <input id="metadataRead" type="checkbox" checked />
+              <span>Read metadata</span>
+            </label>
+
+            <label class="checkbox-row">
+              <input id="duplicateDetection" type="checkbox" checked />
+              <span>Duplicate detection</span>
+            </label>
+
+            <div class="field-group duplicate-only">
+              <span class="group-label">Duplicate preferences</span>
+              <div class="inline-options">
+                <label><input type="checkbox" class="dup-criterion" value="name" checked /> Name</label>
+                <label><input type="checkbox" class="dup-criterion" value="size" checked /> Size</label>
+                <label><input type="checkbox" class="dup-criterion" value="hash" checked /> Hash</label>
+              </div>
+            </div>
+
+            <label class="field date-only">
+              <span>Date basis</span>
+              <select id="dateBasis">
+                <option value="modified">Modification date</option>
+                <option value="creation">Creation date</option>
+                <option value="metadata">Metadata date</option>
+              </select>
+            </label>
+
+            <label class="field custom-only">
+              <span>Custom rules</span>
+              <textarea id="customRules" rows="4" placeholder="invoice => Finance"></textarea>
+            </label>
+
+            <label class="field">
+              <span>Configuration file (.json, .yaml, .yml, .ini)</span>
+              <input id="configFile" type="file" accept=".json,.yaml,.yml,.ini" />
+            </label>
+
+            <div class="category-grid type-only">
+              <label><input type="checkbox" class="cat-toggle" value="Images" checked /> Images</label>
+              <label><input type="checkbox" class="cat-toggle" value="Videos" checked /> Videos</label>
+              <label><input type="checkbox" class="cat-toggle" value="Audio" checked /> Audio</label>
+              <label><input type="checkbox" class="cat-toggle" value="Documents" checked /> Documents</label>
+              <label><input type="checkbox" class="cat-toggle" value="Archives" checked /> Archives</label>
+              <label><input type="checkbox" class="cat-toggle" value="Code" checked /> Code</label>
+              <label><input type="checkbox" class="cat-toggle" value="Spreadsheets" checked /> Spreadsheets</label>
+              <label><input type="checkbox" class="cat-toggle" value="PDFs" checked /> PDFs</label>
+              <label><input type="checkbox" class="cat-toggle" value="Others" checked /> Others</label>
+            </div>
+
+            <button id="applyBtn" class="apply-btn" disabled>Apply</button>
+          </div>
+        </section>
+
+        <section class="panel logs-panel" id="logsPanel" aria-label="Logs" style="visibility: hidden;">
+          <h2 class="panel-title logs-title">Logs</h2>
+          <div class="panel-body logs-body" id="logsBody">
+            <div class="log-empty">No actions yet.</div>
+          </div>
+        </section>
+
+        <section class="uploaded-section">
+          <div class="uploaded-summary" id="uploadedSummary">
+            <div class="uploaded-icon" id="uploadedIcon">—</div>
+            <div class="uploaded-text" id="uploadedText">File Organizer Does Not Save Any Folder(s) or File(s).</div>
+          </div>
+        </section>
+
+        <input id="folderInput" type="file" webkitdirectory directory multiple hidden />
+        <button id="uploadBtn" class="upload-btn">Upload Folder</button>
+      </section>
+
+      <section class="overlay hidden" id="successOverlay" aria-hidden="true">
+        <div class="dialog success-dialog">
+          <div class="dialog-head">
+            <div class="dialog-title success-title">Success</div>
+          </div>
+          <button class="ok-btn" id="okBtn">OK</button>
+        </div>
+      </section>
+
+      <section class="overlay hidden" id="errorOverlay" aria-hidden="true">
+        <div class="dialog error-dialog">
+          <div class="dialog-head">
+            <button class="close-x" id="closeErrorBtn" aria-label="Close unsuccessful dialog">X</button>
+          </div>
+          <div class="dialog-title error-title">Unsuccessful</div>
+        </div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
+  </body>
+</html>
