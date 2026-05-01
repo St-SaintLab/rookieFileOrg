@@ -1,4 +1,4 @@
-# Rookie File Organizer
+# File Organizer
 
 A small Flask web app that accepts a folder upload, organizes files according to the selected rules, writes logs, and returns a zip archive of the organized result.
 
